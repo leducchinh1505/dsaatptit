@@ -1,0 +1,2 @@
+# Test phải giữ nguyên byte (xuống dòng LF) để chấm đúng trên mọi máy.
+tests/** -text

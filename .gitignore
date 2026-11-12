@@ -1,0 +1,5 @@
+# Bài làm riêng và dữ liệu của Competitive Programming Helper, không đưa lên repo
+/*.cpp
+/*.exe
+.cph/
+.playwright-mcp/

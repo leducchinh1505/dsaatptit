@@ -13,22 +13,29 @@
 <style>
 /* Layout: bàn làm việc 3 cột, nav dạng bài, danh sách theo nhóm kỹ thuật, phiếu bài đang làm. Trạng thái dùng ngôn ngữ verdict của online judge. */
 :root{
-  --bg:#eef1f5;--panel:#fbfcfd;--sunk:#e3e8ef;--ink:#17212e;--muted:#59677a;--line:#cfd7e2;
-  --accent:#1d4ed8;--accent-soft:#dbe5fb;--on-accent:#ffffff;
-  --ac:#11734b;--ac-soft:#d5f0e3;--try:#94610a;--try-soft:#f8ebcd;--re:#b42344;--re-soft:#f9dde4;
-  --code-bg:#17212e;--code-fg:#e6edf5;
+  /* Tông sáng ấm theo mẫu: ba cột là ba thẻ trắng bo góc, cột danh sách màu kem, điểm nhấn cam. */
+  --bg:#eef0f3;--panel:#ffffff;--sunk:#f3f4f6;--ink:#1f2328;--muted:#5f6672;--line:#e7e2d8;
+  --accent:#b45309;--accent-soft:#fff1d6;--on-accent:#ffffff;
+  --brand:#f59e0b;--brand-tint:#fff9ec;--brand-ink:#a14a0b;--rev:#1d4ed8;--rev-soft:#e6efff;
+  --shadow:0 1px 2px rgba(16,24,40,.06),0 6px 18px rgba(16,24,40,.06);
+  --ac:#116b34;--ac-soft:#e3f6ea;--try:#b45309;--try-soft:#fff1d6;--re:#b42344;--re-soft:#f9dde4;
+  --code-bg:#1f2328;--code-fg:#eef0f3;
   --sans:"Be Vietnam Pro",system-ui,"Segoe UI",Arial,sans-serif;--mono:"JetBrains Mono",Consolas,"Courier New",monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#10161f;--panel:#171f2b;--sunk:#0c1219;--ink:#e6ecf3;--muted:#98a6b8;--line:#2c3848;
-  --accent:#86a9f7;--accent-soft:#1e2d4d;--on-accent:#0c1219;
-  --ac:#5ed3a0;--ac-soft:#12352a;--try:#e9bd63;--try-soft:#3a2d12;--re:#f48aa2;--re-soft:#3d1a24;
-  --code-bg:#0c1219;--code-fg:#e6edf5;color-scheme:dark}}
+  --bg:#0f1115;--panel:#181b21;--sunk:#20242c;--ink:#e8eaee;--muted:#a3a9b5;--line:#2c3038;
+  --accent:#f5a524;--accent-soft:#3a2a0e;--on-accent:#1a1205;
+  --brand:#f5a524;--brand-tint:#1d1a14;--brand-ink:#f7b955;--rev:#7aa7ff;--rev-soft:#17284a;
+  --shadow:0 1px 2px rgba(0,0,0,.4);
+  --ac:#5ed3a0;--ac-soft:#12352a;--try:#f5a524;--try-soft:#3a2a0e;--re:#f48aa2;--re-soft:#3d1a24;
+  --code-bg:#0b0d10;--code-fg:#e8eaee;color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#10161f;--panel:#171f2b;--sunk:#0c1219;--ink:#e6ecf3;--muted:#98a6b8;--line:#2c3848;
-  --accent:#86a9f7;--accent-soft:#1e2d4d;--on-accent:#0c1219;
-  --ac:#5ed3a0;--ac-soft:#12352a;--try:#e9bd63;--try-soft:#3a2d12;--re:#f48aa2;--re-soft:#3d1a24;
-  --code-bg:#0c1219;--code-fg:#e6edf5;color-scheme:dark}
+  --bg:#0f1115;--panel:#181b21;--sunk:#20242c;--ink:#e8eaee;--muted:#a3a9b5;--line:#2c3038;
+  --accent:#f5a524;--accent-soft:#3a2a0e;--on-accent:#1a1205;
+  --brand:#f5a524;--brand-tint:#1d1a14;--brand-ink:#f7b955;--rev:#7aa7ff;--rev-soft:#17284a;
+  --shadow:0 1px 2px rgba(0,0,0,.4);
+  --ac:#5ed3a0;--ac-soft:#12352a;--try:#f5a524;--try-soft:#3a2a0e;--re:#f48aa2;--re-soft:#3d1a24;
+  --code-bg:#0b0d10;--code-fg:#e8eaee;color-scheme:dark}
 *{box-sizing:border-box}
 html,body{height:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55}
@@ -165,15 +172,62 @@ details.sol{max-width:none}
   body:not(.reading) .detail{display:none}
 }
 @media (prefers-reduced-motion:no-preference){.meter i{transition:width .2s}}
+/* Giao diện thẻ theo mẫu: đè lên các quy tắc phía trên. */
+.app{gap:14px;padding:14px max(14px,env(safe-area-inset-right,0px)) 14px max(14px,env(safe-area-inset-left,0px))}
+.col{background:var(--panel);border-radius:14px;box-shadow:var(--shadow)}
+.nav,.list{border-right:0}
+.nav{padding-left:16px;padding-right:12px}
+.detail{padding-inline:26px}
+.list{background:var(--brand-tint);padding-inline:12px}
+h1{display:flex;align-items:center;gap:9px}
+h1 svg,.navlabel svg{flex:none}
+.navlabel{display:flex;align-items:center;gap:6px}
+.navitem[aria-current="true"]{background:var(--accent-soft)}
+.listhead h2{color:var(--brand-ink)}
+.tools input,.tools select{border-radius:9px;border-color:var(--line);background:var(--panel)}
+.group{display:flex;align-items:center;gap:7px;color:var(--ink);font-size:13px;border-bottom-color:var(--line)}
+.group::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--brand);flex:none}
+.row{border-radius:9px;border-left:4px solid transparent;padding:7px 8px}
+.row:hover{background:var(--accent-soft)}
+.row[aria-current="true"]{background:var(--accent-soft);border-left-color:var(--brand)}
+.row code{color:var(--ink)}
+.st-re{color:var(--rev);background:var(--rev-soft)}
+.meta{font-family:var(--sans);font-size:14px;gap:6px 18px}
+.meta span{display:inline-flex;align-items:center;gap:6px}
+.seg{gap:8px}
+.seg button{display:inline-flex;align-items:center;gap:8px;border-radius:10px;padding:7px 14px;background:var(--panel);border:1px solid var(--line)}
+.seg button:hover{background:var(--sunk)}
+.seg button::before{content:"";width:9px;height:9px;border-radius:50%;flex:none}
+.seg .s-none::before{width:5px;height:5px;background:var(--muted)}
+.seg .s-try::before{background:var(--brand)}
+.seg .s-re::before{background:var(--rev)}
+.seg .s-ac::before{content:"✓";width:16px;height:16px;display:grid;place-items:center;background:var(--ac);color:var(--panel);font-size:11px;font-weight:700}
+.seg button[aria-pressed="true"].s-try{background:var(--accent-soft);border-color:var(--brand);color:var(--ink)}
+.seg button[aria-pressed="true"].s-re{background:var(--rev-soft);border-color:var(--rev);color:var(--ink)}
+.seg button[aria-pressed="true"].s-ac{background:var(--ac-soft);border-color:var(--ac);color:var(--ac)}
+.seg button[aria-pressed="true"].s-none{background:var(--sunk);border-color:var(--line)}
+.btn{border-radius:9px}
+.timer{border-radius:12px}
+/* Tên tác giả ở góc phải trên cùng; dòng đường dẫn chừa chỗ để không bị đè. */
+.author{position:fixed;top:calc(env(safe-area-inset-top,0px) + 24px);right:calc(env(safe-area-inset-right,0px) + 38px);z-index:5;background:var(--accent-soft);color:var(--brand-ink);border:1px solid var(--brand);border-radius:999px;padding:4px 13px;font-size:13px;font-weight:600;line-height:1.4;box-shadow:var(--shadow)}
+.detail .crumb{padding-right:150px}
+@media (max-width:980px){
+  .author{position:static;display:block;width:fit-content;margin:10px max(10px,env(safe-area-inset-right,0px)) 0 auto}
+  .detail .crumb{padding-right:0}
+  .app{padding:10px}
+  .col{margin-bottom:10px}
+  .nav,.list{border-bottom:0}
+}
 </style>
 
+<div class="author">Lê Đức Chính</div>
 <div class="app">
   <nav class="col nav" aria-label="Các phần luyện tập">
-    <h1>Sổ luyện DSA</h1>
+    <h1><svg width="26" height="22" viewBox="0 0 26 22" aria-hidden="true"><path d="M1 3.2C4.6 1.6 8.7 1.6 12.3 3.4V21C8.7 19.3 4.6 19.3 1 20.9Z" fill="#f59e0b"/><path d="M25 3.2C21.4 1.6 17.3 1.6 13.7 3.4V21C17.3 19.3 21.4 19.3 25 20.9Z" fill="#fbbf24"/></svg>Sổ luyện DSA</h1>
     <p class="sub">Kho bài nhóm DSA PTIT, xếp theo dạng bài</p>
     <div class="total"><span>Đã AC</span><span id="totalText"></span></div>
     <div class="meter"><i id="totalBar"></i></div>
-    <div class="navlabel" id="navGuideLabel">Hướng dẫn theo dạng</div>
+    <div class="navlabel" id="navGuideLabel"><svg width="13" height="11" viewBox="0 0 13 11" aria-hidden="true"><g fill="#f59e0b"><rect x="0" y="0" width="2.4" height="2.4" rx=".6"/><rect x="0" y="4.3" width="2.4" height="2.4" rx=".6"/><rect x="0" y="8.6" width="2.4" height="2.4" rx=".6"/><rect x="4" y=".5" width="9" height="1.4" rx=".7"/><rect x="4" y="4.8" width="9" height="1.4" rx=".7"/><rect x="4" y="9.1" width="9" height="1.4" rx=".7"/></g></svg>Hướng dẫn theo dạng</div>
     <div class="navgrid" id="navGuide"></div>
     <div class="navlabel">Theo dạng bài</div>
     <div class="navgrid" id="navTopics"></div>
@@ -384,6 +438,12 @@ int main() {
 const STATUS={none:"Chưa làm",try:"Đang làm",re:"Xem lại",ac:"Đã AC"};
 const SHORT={none:"–",try:"TRY",re:"RE",ac:"AC"};
 const LEVEL={1:"Cơ bản",2:"Vừa",3:"Khó"};
+// Biểu tượng nét mảnh cho dòng thông tin: thời gian, bộ nhớ, độ khó.
+const ICON={
+  clock:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  mem:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>',
+  tag:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3" fill="currentColor" stroke="none"/></svg>'
+};
 
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const store={get(k,d){try{const v=localStorage.getItem("dsa:"+k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem("dsa:"+k,JSON.stringify(v))}catch(e){}}};
@@ -537,7 +597,7 @@ function renderDetail(){
     <button class="btn back" type="button" id="back">← Danh sách bài</button>
     <p class="crumb">${esc(l.label)} · ${esc(p.group)}</p>
     <h2>${esc(p.title)}</h2>
-    <div class="meta"><span>${l.tl} s</span><span>${MEM[p.key]||256} MB</span><span>${LEVEL[p.lv]}</span></div>
+    <div class="meta"><span>${ICON.clock}${l.tl} s</span><span>${ICON.mem}${MEM[p.key]||256} MB</span><span>${ICON.tag}${LEVEL[p.lv]}</span></div>
     <h3>Trạng thái</h3>
     <div class="seg" id="seg">${Object.keys(STATUS).map(k=>`<button type="button" class="s-${k}" data-st="${k}" aria-pressed="${k===st}">${STATUS[k]}</button>`).join("")}</div>
     ${specHtml(p)}
